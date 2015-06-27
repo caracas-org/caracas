@@ -1,1 +1,24 @@
-<h1>Hallo Welt</h1>
+
+{% extends "base.html" %}
+{% block extra_head %}
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Hallo Welt</h1>
+    <div id="map" style="width: 100%; height: 600px"></div>
+{% endblock %}
+
+{% block after_body %}
+  <script type="text/javascript">
+      var layer = new L.StamenTileLayer("watercolor");
+      var map = new L.Map("map", {
+          center: new L.LatLng({{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}),
+          // center: new L.LatLng(51.2457, 6.7681),
+          zoom: 15
+      });
+      map.addLayer(layer);
+  </script>
+{% endblock %}
