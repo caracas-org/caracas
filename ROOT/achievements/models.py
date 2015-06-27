@@ -1,6 +1,10 @@
 from django.db import models
 
+
 class Achievement(models.Model):
+
+    def __str__(self):
+        return "{}: {}".format(self.id, self.name)
 
     name = models.CharField(
         max_length = 256
@@ -56,3 +60,9 @@ class AchievementUnlocked(models.Model):
         auto_now=True,
     )
 
+
+class APIUser(models.Model):
+    def __str__(self):
+        return self.auth_token
+    auth_token = models.CharField(max_length=32)
+    achievements = models.ManyToManyField(Achievement)

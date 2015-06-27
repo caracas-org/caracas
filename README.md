@@ -13,7 +13,7 @@ Compete with your friends.
 Use the synergy of travelling together.
 
 ## authors
-Johannes Spielmann (js@spielmann-solutions.com)
+Johannes Spielmann (j@spielmannsolutions.com)
 
 Marie Schiemann (trutze@gmail.com)
 

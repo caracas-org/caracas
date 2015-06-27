@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,7 +13,30 @@ class ProgressSerializer(serializers.Serializer):
     progress = serializers.IntegerField(
         required=False,
     )
+    progress = serializers.IntegerField(required=False)
 
+    def validate_achievement_id(self, value):
+        if not Achievement.objects.filter(id=value).exists():
+            raise serializers.ValidationError("Achievement ID does not exist")
+        return value
+
+    def validate_user_id(self, value):
+        if not User.objects.filter(id=value).exists():
+            raise serializers.ValidationError("User does not exist")
+        return User.objects.get(id=value)
+
+    def validate_auth_token(self, value):
+        if not APIUser.objects.filter(auth_token=value).exists():
+            raise serializers.ValidationError("Auth token is not correct")
+        return APIUser.objects.get(auth_token=value)
+
+    def validate(self, data):
+        api_user = data['auth_token']
+        if data['fulfilled'] == False and data['progress'] == None:
+            raise serializers.ValidationError("Either fulfilled or progress have to be set")
+        if not api_user.achievements.filter(id=data['achievement_id']).exists():
+            raise serializers.ValidationError("Not authorized to update this Achievement")
+        return data
 
 
 class AchievementProgressSerializer(serializers.Serializer):
@@ -60,8 +84,31 @@ class UnlockProgress(APIView):
     serializer_class = ProgressSerializer
 
     def post(self, request):
-        print(request.DATA)
-        return Response({'not implemented': 'yet'})
+        serializer = ProgressSerializer(data=request.data)
+        if serializer.is_valid():
+            response = dict()
+            achievement = Achievement.objects.get(id=serializer.validated_data['achievement_id'])
+            achievement_unlocked = AchievementUnlocked.objects.get(achievement_id=serializer.validated_data['achievement_id'], character__user_id=serializer.validated_data['user_id'])
+            #get or create
+            response['fulfilled'] = (achievement.max_progress == achievement_unlocked.progress)
+            response['achievement_id'] = achievement.id
+            response['achievement_image'] = achievement.icon.url
+            response['achievement_name'] = achievement.name
+            response['achievement_max_progress'] = achievement.max_progress
+            response['progress'] = min(serializer.validated_data['progress'], achievement.max_progress)
+            response['xp_gained'] = 0 if not response['fulfilled'] else achievement.XP_gained
+            if achievement_unlocked.progress > serializer.validated_data['progress']:
+                raise ValueError("Progress must be larger than current progress")
+            if not response['fulfilled']:
+                if response['progress'] > achievement_unlocked.progress:
+                    achievement_unlocked.progress = response['progress']
+                    if response['progress'] >= achievement.max_progress:
+                        response['fulfilled'] = True
+                        achievement_unlocked.fulfilled = True
+                        response['xp_gained'] = achievement.XP_gained
+                    achievement_unlocked.save()
+            return Response(response)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetAchievements(APIView):
