@@ -1,6 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Character(models.Model):
+
+    def __str__(self):
+        return self.user.username
 
     user = models.OneToOneField(
         'auth.user',
