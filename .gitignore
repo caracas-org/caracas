@@ -1,6 +1,7 @@
 *.py[co]
 .idea/
 *.sqlite3
+*.png
 
 # Packages
 *.egg

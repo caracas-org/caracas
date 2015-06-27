@@ -39,6 +39,9 @@ class Achievement(models.Model):
 
 class AchievementUnlocked(models.Model):
 
+    def __str__(self):
+        return "{}: {}".format(self.character.user.username, self.achievement.name)
+
     achievement = models.ForeignKey(Achievement)
     character = models.ForeignKey('character.Character')
 
