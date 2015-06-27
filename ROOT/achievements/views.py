@@ -1,15 +1,41 @@
+from .models import Achievement, APIUser
+from django.contrib.auth.models import User
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 
 class ProgressSerializer(serializers.Serializer):
     achievement_id = serializers.CharField()
     auth_token = serializers.CharField()
     user_id = serializers.CharField()
     fulfilled = serializers.BooleanField()
-    progress = serializers.IntegerField()
+    progress = serializers.IntegerField(required=False)
+
+    def validate_achievement_id(self, value):
+        if not Achievement.objects.filter(id=value).exists():
+            raise serializers.ValidationError("Achievement ID does not exist")
+        return value
+
+    def validate_user_id(self, value):
+        if not User.objects.filter(id=value).exists():
+            raise serializers.ValidationError("User does not exist")
+        return User.objects.get(id=value)
+
+    def validate_auth_token(self, value):
+        if not APIUser.objects.filter(auth_token=value).exists():
+            raise serializers.ValidationError("Auth token is not correct")
+        return APIUser.objects.get(auth_token=value)
+
+    def validate(self, data):
+        api_user = data['auth_token']
+        if data['fulfilled'] == False and data['progress'] == None:
+            raise serializers.ValidationError("Either fulfilled or progress have to be set")
+        if not api_user.achievements.filter(id=data['achievement_id']).exists():
+            raise serializers.ValidationError("Not authorized to update this Achievement")
+        return data
+
 
 class AchievementProgressSerializer(serializers.Serializer):
     """
@@ -55,7 +81,10 @@ class UnlockProgress(APIView):
     serializer_class = ProgressSerializer
 
     def post(self, request):
-        return Response({'not implemented': 'yet'})
+        serializer = ProgressSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response({'progress': 'test'})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetAchievements(APIView):
