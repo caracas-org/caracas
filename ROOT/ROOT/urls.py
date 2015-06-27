@@ -17,12 +17,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from character import urls as characters_urls
-from achievments import urls as achievment_urls
+from achievements import urls as achievement_urls
 from game import urls as game_urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^c/', include(characters_urls)),
-    url(r'^a/', include(achievment_urls)),
+    url(r'^a/', include(achievement_urls)),
     url(r'^g/', include(game_urls)),
 ]
