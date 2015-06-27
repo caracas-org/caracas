@@ -129,7 +129,6 @@ class GetAchievements(APIView):
         lat = request.GET.get('lat')
         lon = request.GET.get('lon')
         radius = request.GET.get('box_radius')
-        print(lat, lon, radius)
         if lat is None or lon is None or radius is None:
             return Response({'msg': 'send `lat`, `lon` and `box_radius`'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -141,6 +140,8 @@ class GetAchievements(APIView):
                 'achievement_name': a.name,
                 'achievement_description': a.description,
                 'achievement_max_progress': a.max_progress,
+                'achievement_lat': a.lat,
+                'achievement_lon': a.lon,
             }
             a_unlocked_q = AchievementUnlocked.objects.filter(achievement=a, character__user=request.user)
             if a_unlocked_q:
