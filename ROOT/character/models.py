@@ -1,3 +1,21 @@
 from django.db import models
 
-# Create your models here.
+class Character(models.Model):
+
+    user = models.OneToOneField(
+        'auth.user',
+    )
+
+    image = models.ImageField(
+        blank=True, null=True,
+    )
+
+    XP = models.PositiveIntegerField(
+        default=0,
+    )
+    points = models.PositiveIntegerField(
+        default=0,
+    )
+    level = models.PositiveIntegerField(
+        default=0,
+    )
