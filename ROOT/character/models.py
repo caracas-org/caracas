@@ -19,3 +19,10 @@ class Character(models.Model):
     level = models.PositiveIntegerField(
         default=0,
     )
+    # optional location
+    lon = models.FloatField(
+        blank=True, null=True,
+    )
+    lat = models.FloatField(
+        blank=True, null=True,
+    )
