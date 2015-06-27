@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework import serializers
@@ -125,9 +126,10 @@ class GetAchievements(APIView):
     """
 
     def get(self, request):
-        lat = request.data.get('lat')
-        lon = request.data.get('lon')
-        radius = request.data.get('box_radius')
+        lat = request.GET.get('lat')
+        lon = request.GET.get('lon')
+        radius = request.GET.get('box_radius')
+        print(lat, lon, radius)
         if lat is None or lon is None or radius is None:
             return Response({'msg': 'send `lat`, `lon` and `box_radius`'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -135,7 +137,7 @@ class GetAchievements(APIView):
         for a in Achievement.objects.filter():
             a_j = {
                 'achievement_id': a.id,
-                'achievement_image': a.image,
+                'achievement_image': a.icon.url if a.icon else settings.DEFAULT_ACHIEVEMENT_IMAGE,
                 'achievement_name': a.name,
                 'achievement_description': a.description,
                 'achievement_max_progress': a.max_progress,
@@ -149,4 +151,4 @@ class GetAchievements(APIView):
 
             res.append(a_j)
 
-        return Response({'not implemented': 'yet', 'achievements': []})
+        return Response({'achievements': res})

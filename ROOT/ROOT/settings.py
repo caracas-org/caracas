@@ -110,3 +110,8 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = "/tmp/staticroot"
+
+
+
+
+DEFAULT_ACHIEVEMENT_IMAGE = ''
