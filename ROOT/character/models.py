@@ -4,7 +4,7 @@ from django.db import models
 class Character(models.Model):
 
     def __str__(self):
-        return self.user.username
+        return "{}: {}".format(self.user.id, self.user.username)
 
     user = models.OneToOneField(
         'auth.user',
