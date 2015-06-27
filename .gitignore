@@ -1,0 +1,28 @@
+*.py[co]
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+develop-eggs
+.installed.cfg
+scratch
+env
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+.DS_Store
+
+# Sphinx
+docs/tmp
+docs/_build
+cover
