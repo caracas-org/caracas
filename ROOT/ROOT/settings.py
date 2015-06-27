@@ -41,9 +41,11 @@ INSTALLED_APPS = (
     'character',
     'game',
     'rest_framework',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,5 +115,10 @@ STATIC_ROOT = "/tmp/staticroot"
 
 
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_ACHIEVEMENT_IMAGE = ''
+
+try:
+    from settings_production import *
+except:
+    print("could not import production settings")

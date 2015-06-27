@@ -103,12 +103,12 @@ class UnlockProgress(APIView):
             if 'fulfilled' in serializer.data:
                 response['fulfilled'] = True
             response['achievement_id'] = achievement.id
-            response['achievement_image'] = achievement.icon.url
+            response['achievement_image'] = achievement.icon.url if achievement.icon else ''
             response['achievement_name'] = achievement.name
             response['achievement_max_progress'] = achievement.max_progress
-            response['progress'] = min(serializer.validated_data['progress'], achievement.max_progress)
             response['xp_gained'] = 0 if not response['fulfilled'] else achievement.XP_gained
             if not response['fulfilled']:
+                response['progress'] = min(serializer.validated_data['progress'], achievement.max_progress)
                 if achievement_unlocked.progress > serializer.validated_data['progress']:
                     raise ValueError("Progress must be larger than current progress")
                 if response['progress'] > achievement_unlocked.progress:
