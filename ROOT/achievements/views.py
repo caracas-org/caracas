@@ -1,6 +1,8 @@
 from character.models import Character
 from .models import Achievement, APIUser, AchievementUnlocked
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.shortcuts import render
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.response import Response
@@ -12,7 +14,7 @@ class ProgressSerializer(serializers.Serializer):
     auth_token = serializers.CharField()
     user_id = serializers.CharField()
     fulfilled = serializers.BooleanField()
-    progress = serializers.IntegerField(required=True, allow_null=True)
+    progress = serializers.IntegerField(required=False)
 
     def validate_achievement_id(self, value):
         if not Achievement.objects.filter(id=value).exists():
@@ -70,13 +72,14 @@ class UnlockProgress(APIView):
       marked as unlocked.
 
     In case your request was successful, you will get:
-    * `progress`:
-    * `fulfilled`:
-    * `xp_gained`:
-    * `achievement_id`:
-    * `achievement_image`:
-    * `achievement_name`:
-    * `achievement_max_progress`:
+    * `progress`: The new value of the progress of this achievement for the given user.
+    * `fulfilled`: Boolean, whether the achievement was fully progressed or not. If you sent `fulfilled == true`, then
+      this will be true.
+    * `xp_gained`: The amount of XP the user gained for getting this achievement.
+    * `achievement_id`: The id of the achievement.
+    * `achievement_image`: The image for this achievement as a URL that can be embedded directly in your page.
+    * `achievement_name`: The (readable) name of the achievement.
+    * `achievement_max_progress`: The amount of progress this achievement must do before it is fully unlocked.
     """
 
     serializer_class = ProgressSerializer
@@ -125,7 +128,36 @@ class GetAchievements(APIView):
 
     Send in lat/lon (as floats) and a box radius to get all achievements in the area `[lat-br, lat+br]` and
     `[lon-br, lon+br]`.
+
+    Returns a list of Achievement objects. Each object contains all Achievement data (and stuff) as well as all the
+    progress data for the currently logged-in user.
     """
 
     def get(self, request):
-        return Response({'not implemented': 'yet', 'achievements': []})
+        lat = request.GET.get('lat')
+        lon = request.GET.get('lon')
+        radius = request.GET.get('box_radius')
+        if lat is None or lon is None or radius is None:
+            return Response({'msg': 'send `lat`, `lon` and `box_radius`'}, status=status.HTTP_400_BAD_REQUEST)
+
+        res = []
+        for a in Achievement.objects.filter():
+            a_j = {
+                'achievement_id': a.id,
+                'achievement_image': a.icon.url if a.icon else settings.DEFAULT_ACHIEVEMENT_IMAGE,
+                'achievement_name': a.name,
+                'achievement_description': a.description,
+                'achievement_max_progress': a.max_progress,
+                'achievement_lat': a.lat,
+                'achievement_lon': a.lon,
+            }
+            a_unlocked_q = AchievementUnlocked.objects.filter(achievement=a, character__user=request.user)
+            if a_unlocked_q:
+                a_u = a_unlocked_q[0]
+                a_j['progress'] = a_u.progress
+                a_j['fulfilled'] = a_u.unlocked is not None
+                a_j['unlocked'] = a_u.unlocked
+
+            res.append(a_j)
+
+        return Response({'achievements': res})
