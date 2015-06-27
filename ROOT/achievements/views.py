@@ -41,6 +41,15 @@ class UnlockProgress(APIView):
       this will also be ignored.
     * `fulfilled`: boolean attribute. If you send `true`, the achievement will marked with full progress and
       marked as unlocked.
+
+    In case your request was successful, you will get:
+    * `progress`:
+    * `fulfilled`:
+    * `xp_gained`:
+    * `achievement_id`:
+    * `achievement_image`:
+    * `achievement_name`:
+    * `achievement_max_progress`:
     """
 
     serializer_class = ProgressSerializer
