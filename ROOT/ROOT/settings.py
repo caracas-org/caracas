@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'achievements',
     'character',
     'game',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

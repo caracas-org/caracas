@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', character.views.index),
     # url(r'^c/', include(characters_urls)),
-    # url(r'^a/', include(achievement_urls)),
+    url(r'^a/', include(achievement_urls)),
     # url(r'^g/', include(game_urls)),
 ]
