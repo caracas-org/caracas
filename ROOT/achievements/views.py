@@ -131,9 +131,19 @@ class GetAchievements(APIView):
         radius = request.GET.get('box_radius')
         if lat is None or lon is None or radius is None:
             return Response({'msg': 'send `lat`, `lon` and `box_radius`'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            lat = float(lat)
+            lon = float(lon)
+            radius = float(radius)
+        except ValueError:
+            return Response({'msg': 'send `lat`, `lon` and `box_radius` as numbers'}, status=status.HTTP_400_BAD_REQUEST)
 
         res = []
-        for a in Achievement.objects.filter():
+        for a in Achievement.objects.filter(
+            lat__isnull=False, lon__isnull=False,
+            lat__gte=lat-radius, lat__lte=lat+radius,
+            lon__gte=lon-radius, lon__lte=lon+radius,
+        ):
             a_j = {
                 'achievement_id': a.id,
                 'achievement_image': a.icon.url if a.icon else settings.DEFAULT_ACHIEVEMENT_IMAGE,
