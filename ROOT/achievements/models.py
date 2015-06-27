@@ -3,7 +3,7 @@ from django.db import models
 class Achievement(models.Model):
 
     name = models.CharField(
-
+        max_length = 256
     )
     description = models.TextField(
         blank=True, null=True,
