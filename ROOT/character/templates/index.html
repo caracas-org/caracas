@@ -24,13 +24,19 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
   <script type="text/javascript">
-    var layer = new L.StamenTileLayer("watercolor");
-    map = new L.Map("map", {
-      center: new L.LatLng({{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}),
-      // center: new L.LatLng(51.2457, 6.7681),
-      zoom: 15
-    });
-    map.addLayer(layer);
+    // var layer = new L.StamenTileLayer("watercolor");
+    // // //stamen-tiles-{s}.a.ssl.fastly.net/
+    // map = new L.Map("map", {
+    //   center: new L.LatLng({{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}),
+    //   // center: new L.LatLng(51.2457, 6.7681),
+    //   zoom: 15
+    // });
+    // map.addLayer(layer);
+
+    var map = L.map('map').setView([{{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}], 15);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    }).addTo(map);
   </script>
   <script type="text/javascript" src="{% static "map.js" %}"></script>
 {% endblock %}
