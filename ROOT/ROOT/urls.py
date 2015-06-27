@@ -22,7 +22,7 @@ from game import urls as game_urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'c/', include(characters_urls)),
-    url(r'a/', include(achievment_urls)),
-    url(r'g/', include(game_urls)),
+    url(r'^c/', include(characters_urls)),
+    url(r'^a/', include(achievment_urls)),
+    url(r'^g/', include(game_urls)),
 ]
