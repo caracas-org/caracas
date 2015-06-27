@@ -12,3 +12,12 @@ html, body {
     float: left;
     font-weight: bold;
     font-size: 200%; }
+
+#avatar {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100; }
