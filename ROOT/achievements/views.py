@@ -9,7 +9,11 @@ class ProgressSerializer(serializers.Serializer):
     auth_token = serializers.CharField()
     user_id = serializers.CharField()
     fulfilled = serializers.BooleanField()
-    progress = serializers.IntegerField()
+    progress = serializers.IntegerField(
+        required=False,
+    )
+
+
 
 class AchievementProgressSerializer(serializers.Serializer):
     """
@@ -43,18 +47,20 @@ class UnlockProgress(APIView):
       marked as unlocked.
 
     In case your request was successful, you will get:
-    * `progress`:
-    * `fulfilled`:
-    * `xp_gained`:
-    * `achievement_id`:
-    * `achievement_image`:
-    * `achievement_name`:
-    * `achievement_max_progress`:
+    * `progress`: The new value of the progress of this achievement for the given user.
+    * `fulfilled`: Boolean, whether the achievement was fully progressed or not. If you sent `fulfilled == true`, then
+      this will be true.
+    * `xp_gained`: The amount of XP the user gained for getting this achievement.
+    * `achievement_id`: The id of the achievement.
+    * `achievement_image`: The image for this achievement as a URL that can be embedded directly in your page.
+    * `achievement_name`: The (readable) name of the achievement.
+    * `achievement_max_progress`: The amount of progress this achievement must do before it is fully unlocked.
     """
 
     serializer_class = ProgressSerializer
 
     def post(self, request):
+        print(request.DATA)
         return Response({'not implemented': 'yet'})
 
 
