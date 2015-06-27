@@ -4,6 +4,8 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .models import Achievement, AchievementUnlocked
+
 
 class ProgressSerializer(serializers.Serializer):
     achievement_id = serializers.CharField()
@@ -117,7 +119,34 @@ class GetAchievements(APIView):
 
     Send in lat/lon (as floats) and a box radius to get all achievements in the area `[lat-br, lat+br]` and
     `[lon-br, lon+br]`.
+
+    Returns a list of Achievement objects. Each object contains all Achievement data (and stuff) as well as all the
+    progress data for the currently logged-in user.
     """
 
     def get(self, request):
+        lat = request.data.get('lat')
+        lon = request.data.get('lon')
+        radius = request.data.get('box_radius')
+        if lat is None or lon is None or radius is None:
+            return Response({'msg': 'send `lat`, `lon` and `box_radius`'}, status=status.HTTP_400_BAD_REQUEST)
+
+        res = []
+        for a in Achievement.objects.filter():
+            a_j = {
+                'achievement_id': a.id,
+                'achievement_image': a.image,
+                'achievement_name': a.name,
+                'achievement_description': a.description,
+                'achievement_max_progress': a.max_progress,
+            }
+            a_unlocked_q = AchievementUnlocked.objects.filter(achievement=a, character__user=request.user)
+            if a_unlocked_q:
+                a_u = a_unlocked_q[0]
+                a_j['progress'] = a_u.progress
+                a_j['fulfilled'] = a_u.unlocked is not None
+                a_j['unlocked'] = a_u.unlocked
+
+            res.append(a_j)
+
         return Response({'not implemented': 'yet', 'achievements': []})
