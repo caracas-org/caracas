@@ -7,8 +7,17 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Hallo Welt</h1>
-    <div id="map" style="width: 100%; height: 600px"></div>
+    <div class="container-fluid">
+      <div id="header-row" class="row">
+        <span class="title">Caracas</span>
+        <span><a id="logout" href=""> Logout </a></span>
+        <span id="settings"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </span>
+        <span id="search-box"> Suche </span>
+      </div>
+      <div class="row">
+        <div id="map"></div>
+      </div>
+    </div>
 {% endblock %}
 
 {% block after_body %}
