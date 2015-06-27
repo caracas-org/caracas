@@ -1,4 +1,6 @@
 *.py[co]
+.idea/
+*.sqlite3
 
 # Packages
 *.egg
