@@ -28,3 +28,6 @@ pip-log.txt
 docs/tmp
 docs/_build
 cover
+
+.sass-cache
+*.swp

@@ -18,3 +18,13 @@ html, body {
         }
     }
 }
+
+#avatar {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
