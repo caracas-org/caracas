@@ -35,7 +35,25 @@ $avatar_width: 200px;
     z-index: 100;
     overflow: hidden;
 
-    
+    #charsheet {
+        width: 100%; height: 200px;
+        #username {
+            font-size: 120%;
+            color: #dddddd;
+        }
+        #userimage {
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        a {
+            display: block;
+            text-align:center;
+            width: 100%;
+            color: #ddd;
+        }
+    }
 
     .buttons {
         margin-top: 1em;
