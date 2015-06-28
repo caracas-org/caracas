@@ -1,0 +1,27 @@
+{% extends "rest_framework/base.html" %}
+
+{% block description %}
+
+<h2>Insert into header</h2>
+<pre class="prettyprint">
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt; <br />
+    &lt;script src="http://article.gladis.org/static/embed/caracas_api.js"&gt;&lt;/script&gt;
+</pre>
+
+
+<h2>Insert where ever the achievement is triggered:</h2>
+
+<pre class="prettyprint">
+    &lt;script&gt;$.achievement_unlocked(&lt;ACHIEVEMENT_ID&gt;, &lt;USER_ID&gt;, 'auth_token');&lt;/script&gt;
+</pre>
+
+    <button onclick="javascript:show_popup('ACHIEVEMENT', '', 100);">DEMO!</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/static/embed/caracas_api.js"></script>
+
+    <style>
+    .response-info {display: none;}
+    </style>
+
+{% endblock %}

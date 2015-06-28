@@ -180,15 +180,8 @@ class GetAchievements(APIView):
         return Response({'achievements': res})
 
 def embed(request):
-    html = '''<h2>Insert into header</h2>
-    <span>
-        &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt; <br />
-        &lt;script src="http://caracas.rocks/static/embed/caracas_api.js"&gt;&lt;/script&gt;
-    </span>
-    <h2>Insert where ever the achievement is triggered:</h2>
-    <span>
-        &lt;script&gt;$.achievement_unlocked(&lt;ACHIEVEMENT_ID&gt;, &lt;USER_ID&gt;, 'auth_token');&lt;/script&gt;
-    <span>
+    return render(request, 'api/embed.html')
+    html = '''
     '''
     return HttpResponse(html)
 
@@ -215,6 +208,23 @@ def listAll(request):
             if au.unlocked is not None:
                 item['is_unlocked'] = True
                 item['unlock_date'] = au.unlocked
+        achievements.append(item)
+
+    context = RequestContext(request, {
+        'achievements': achievements
+    })
+    return HttpResponse(template.render(context))
+
+def recentAchievements(request):
+    template = loader.get_template("recent_achievements.html")
+    achievements = list()
+    for a in AchievementUnlocked.objects.filter(character__user=request.user).order_by('-unlocked')[:5]:
+        item = {
+            'image_url': a.achievement.icon.url,
+            'achievement_decription': a.achievement.description,
+            'achievement_name': a.achievement.name,
+            'unlock_date': a.unlocked
+        }
         achievements.append(item)
 
     context = RequestContext(request, {
