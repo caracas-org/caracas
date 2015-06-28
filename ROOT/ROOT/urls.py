@@ -22,7 +22,8 @@ from game import urls as game_urls
 
 import achievements.views
 import character.views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', character.views.index, name="index"),
@@ -30,5 +31,5 @@ urlpatterns = [
     url(r'^a/', include(achievement_urls)),
     # url(r'^g/', include(game_urls)),
     url(r'^embed/', achievements.views.embed),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
