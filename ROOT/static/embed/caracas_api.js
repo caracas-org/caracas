@@ -1,7 +1,7 @@
 
 // needs jquery
 
-var CARACAS_BASE_URL = 'http://caracas.rocks/';
+var CARACAS_BASE_URL = 'http://caracas.gladis.org/';
 var show_popup;
 
 (function() {

@@ -17,7 +17,7 @@
   });
 
   addMarker = function(achievement) {
-    var icon, icon_url, idx, lat, latLng, lon;
+    var icon, icon_url, idx, lat, latLng, lon, popup_text;
     lat = achievement.achievement_lat;
     lon = achievement.achievement_lon;
     latLng = [lat, lon];
@@ -27,18 +27,23 @@
     }
     console.log(achievement);
     icon_url = achievement.achievement_image;
-    if (icons.hasOwnProperty(icon_url)) {
-      icon = icons[icon_url];
+    if (icon_url !== "") {
+      if (icons.hasOwnProperty(icon_url)) {
+        icon = icons[icon_url];
+      } else {
+        icon = new ourIcon({
+          iconUrl: icon_url
+        });
+        icons[icon_url] = icon;
+      }
+      markers[idx] = true;
+      popup_text = "<h4>" + achievement.achievement_name + "</h4><p>" + achievement.achievement_description + "</p><p><a onclick='$.achievement_unlocked(" + achievement.achievement_id + ", " + user_id + ", \"team_caracass\");'>test</a></p>";
+      return L.marker(latLng, {
+        icon: icon
+      }).bindPopup(popup_text).addTo(map);
     } else {
-      icon = new ourIcon({
-        iconUrl: icon_url
-      });
-      icons[icon_url] = icon;
+      return L.marker(latLng).bindPopup(popup_text).addTo(map);
     }
-    markers[idx] = true;
-    return L.marker(latLng, {
-      icon: icon
-    }).addTo(map);
   };
 
   setAllMarker = function() {

@@ -22,13 +22,25 @@ addMarker = (achievement) ->
     return
   console.log achievement
   icon_url = achievement.achievement_image
-  if icons.hasOwnProperty icon_url
-    icon = icons[icon_url]
+  if icon_url != ""
+
+    if icons.hasOwnProperty icon_url
+      icon = icons[icon_url]
+    else
+      icon = new ourIcon({iconUrl: icon_url})
+      icons[icon_url] = icon
+    markers[idx] = true
+    # { achievement_lon: 6.7681
+    #  achievement_name: "Hans Wurst"
+    #  achievement_lat: 51.2457
+    #  achievement_description: "Hoho"
+    #  achievement_max_progress: 1
+    #  achievement_id: 1
+    #  achievement_image: "/media/snowboard.png" } 
+    popup_text = "<h4>#{achievement.achievement_name}</h4><p>#{achievement.achievement_description}</p><p><a onclick='$.achievement_unlocked(#{achievement.achievement_id}, #{user_id}, \"team_caracass\");'>test</a></p>"
+    L.marker(latLng, {icon: icon}).bindPopup(popup_text).addTo(map)
   else
-    icon = new ourIcon({iconUrl: icon_url})
-    icons[icon_url] = icon
-  markers[idx] = true
-  L.marker(latLng, {icon: icon}).addTo(map)
+    L.marker(latLng).bindPopup(popup_text).addTo(map)
 
 setAllMarker = () ->
   bounds = map.getBounds()
