@@ -221,3 +221,20 @@ def listAll(request):
         'achievements': achievements
     })
     return HttpResponse(template.render(context))
+
+def recentAchievements(request):
+    template = loader.get_template("recent_achievements.html")
+    achievements = list()
+    for a in AchievementUnlocked.objects.filter(character__user=request.user).order_by('-unlocked')[:5]:
+        item = {
+            'image_url': a.achievement.icon.url,
+            'achievement_decription': a.achievement.description,
+            'achievement_name': a.achievement.name,
+            'unlock_date': a.unlocked
+        }
+        achievements.append(item)
+
+    context = RequestContext(request, {
+        'achievements': achievements
+    })
+    return HttpResponse(template.render(context))
