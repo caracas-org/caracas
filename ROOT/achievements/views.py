@@ -221,7 +221,7 @@ def recentAchievements(request):
     for a in AchievementUnlocked.objects.filter(character__user=request.user).order_by('-unlocked')[:5]:
         item = {
             'image_url': a.achievement.icon.url,
-            'achievement_decription': a.achievement.description,
+            'achievement_description': a.achievement.description,
             'achievement_name': a.achievement.name,
             'unlock_date': a.unlocked
         }

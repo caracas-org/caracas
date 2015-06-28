@@ -1,3 +1,5 @@
+from achievements.models import Achievement
+from character.models import Character
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -22,7 +24,7 @@ def overview(request):
     for a in AchievementUnlocked.objects.filter(character__user=request.user, unlocked__isnull=False).order_by('-unlocked')[:5]:
         item = {
             'image_url': a.achievement.icon.url if a.achievement.icon else '',
-            'achievement_decription': a.achievement.description,
+            'achievement_description': a.achievement.description,
             'achievement_name': a.achievement.name,
             'unlock_date': a.unlocked
         }
@@ -32,9 +34,33 @@ def overview(request):
         'achievements': achievements
     })
     achievement_tab = template.render(context)
+    #
 
+    template = loader.get_template("all_achievements.html")
+    achievements = list()
+    no_users = Character.objects.all().count()
+    for a in Achievement.objects.all():
+        total_unlocked = AchievementUnlocked.objects.filter(achievement=a).count()
+        item = {
+            'image_url': a.icon.url,
+            'achievement_description': a.description,
+            'achievement_name': a.name,
+            'achievement_unlocked_total': total_unlocked,
+            'user_total': no_users,
+        }
+        au = AchievementUnlocked.objects.get(achievement=a, character__user=request.user)
+        if au:
+            if au.unlocked is not None:
+                item['is_unlocked'] = True
+                item['unlock_date'] = au.unlocked
+        achievements.append(item)
+    context = RequestContext(request, {
+        'achievements': achievements
+    })
+    achievement_all = template.render(context)
     return render(request, "overview.html", {
         'achievement_tab': achievement_tab,
+        'achievement_all': achievement_all
     })
 
 def login(request):

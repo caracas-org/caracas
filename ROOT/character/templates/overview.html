@@ -1,17 +1,17 @@
 <ul class="nav nav-tabs" id="myTab">
-    <li><a onclick="$(this).tab('show');" href="#visited">visited</a></li>
-    <li><a onclick="$(this).tab('show');" href="#achievements">Achievements</a></li>
+    <li><a onclick="$(this).tab('show');" href="#unlocked">unlocked</a></li>
+    <li><a onclick="$(this).tab('show');" href="#achievements">all Achievements</a></li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane" id="visited">
-        Home
+    <div class="tab-pane" id="unlocked">
+        {{ achievement_tab | safe }}
     </div>
     <div class="tab-pane" id="achievements">
-        {{ achievement_tab|safe }}
+        {{ achievement_all | safe }}
     </div>
 </div>
 
 <script>
-    $('#myTab a:last').tab('show');
+    $('#myTab a:first').tab('show');
 </script>
