@@ -9,7 +9,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse
-
+from django.views.decorators.csrf import csrf_exempt
 
 class ProgressSerializer(serializers.Serializer):
     achievement_id = serializers.CharField()
@@ -86,6 +86,7 @@ class UnlockProgress(APIView):
 
     serializer_class = ProgressSerializer
 
+    @csrf_exempt
     def post(self, request):
         serializer = ProgressSerializer(data=request.data)
         if serializer.is_valid():
