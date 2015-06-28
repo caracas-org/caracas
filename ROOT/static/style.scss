@@ -19,12 +19,22 @@ html, body {
     }
 }
 
+$avatar_width: 200px;
 #avatar {
-    width: 200px;
+    width: $avatar_width;
     height: 200px;
     background-color: red;
     position: absolute;
     top: 2.85em;
     right: 20px;
     z-index: 100;
+}
+
+#dumping-ground {
+    position: absolute;
+    width: $avatar_width;
+    background-color: green;
+    top: 250px;
+    right: 20px;
+    z-index: 90
 }
