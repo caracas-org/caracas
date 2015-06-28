@@ -37,7 +37,7 @@
         icons[icon_url] = icon;
       }
       markers[idx] = true;
-      popup_text = "<h4>" + achievement.achievement_name + "</h4><p>" + achievement.achievement_description + "</p><p><a onclick='$.achievement_unlocked(" + achievement.achievement_id + ", " + user_id + ", \"team_caracass\");'>test</a></p>";
+      popup_text = "<h4>" + achievement.achievement_name + "</h4><p>" + achievement.achievement_description + "</p><p><a href=\"\#\" onclick='$.achievement_unlocked(" + achievement.achievement_id + ", " + user_id + ", \"team_caracas\");'>I did this allready</a></p>";
       return L.marker(latLng, {
         icon: icon
       }).bindPopup(popup_text).addTo(map);

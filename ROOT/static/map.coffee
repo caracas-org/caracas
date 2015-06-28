@@ -37,7 +37,7 @@ addMarker = (achievement) ->
     #  achievement_max_progress: 1
     #  achievement_id: 1
     #  achievement_image: "/media/snowboard.png" } 
-    popup_text = "<h4>#{achievement.achievement_name}</h4><p>#{achievement.achievement_description}</p><p><a onclick='$.achievement_unlocked(#{achievement.achievement_id}, #{user_id}, \"team_caracass\");'>test</a></p>"
+    popup_text = "<h4>#{achievement.achievement_name}</h4><p>#{achievement.achievement_description}</p><p><a href=\"\#\" onclick='$.achievement_unlocked(#{achievement.achievement_id}, #{user_id}, \"team_caracas\");'>I did this allready</a></p>"
     L.marker(latLng, {icon: icon}).bindPopup(popup_text).addTo(map)
   else
     L.marker(latLng).bindPopup(popup_text).addTo(map)

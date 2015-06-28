@@ -10,7 +10,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse
 
-
 class ProgressSerializer(serializers.Serializer):
     achievement_id = serializers.CharField()
     auth_token = serializers.CharField()
