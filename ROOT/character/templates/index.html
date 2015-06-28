@@ -32,7 +32,7 @@ class="fill"
       <div id="avatar">
 
           <div id="charsheet">
-              <div id="username">{{ character.user.username }}</div>
+              <div id="username">{{ character.user.username }} (Level {{character.level}}) {{character.XP}} XP</div>
               <div id="userimage"><img src="{{ character.image.url }}"></div>
               <a onclick="javascript:$('#avatar').animate({'height': '450px'}, 100);" href="#">&#x25BC;</a>
           </div>
