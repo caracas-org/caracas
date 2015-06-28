@@ -69,10 +69,34 @@ $avatar_width: 200px;
 
 #login {
     width: 500px;
-    height: 400px;
+    height: 190px;
     position: absolute;
     background-color: yellow;
     z-index: 1000;
     right: 100px;
     top: 100px;
+
+    form {
+        input {
+            margin: 10%;
+            width: 80%;
+        }
+        p {
+            width: 80%;
+            margin: auto;
+            margin-top: 1em;
+
+            input {
+                float: right;
+                cursor: auto;
+                background-image: none !important;
+                background-color: white;
+                border: black 1px solid;
+                width: 60%;
+                margin: auto;
+            }
+        }
+
+    }
+
 }
