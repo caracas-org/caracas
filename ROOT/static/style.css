@@ -29,3 +29,12 @@ html, body {
   top: 250px;
   right: 20px;
   z-index: 90; }
+
+#login {
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  background-color: yellow;
+  z-index: 1000;
+  right: 100px;
+  top: 100px; }

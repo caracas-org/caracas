@@ -25,7 +25,7 @@ import character.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', character.views.index),
+    url(r'^$', character.views.index, name="index"),
     url(r'^c/', include(characters_urls, namespace="character")),
     url(r'^a/', include(achievement_urls)),
     # url(r'^g/', include(game_urls)),
