@@ -32,3 +32,4 @@ cover
 
 .sass-cache
 *.swp
+settings_production.py
