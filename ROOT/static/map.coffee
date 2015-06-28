@@ -1,4 +1,17 @@
 markers = {}
+icons = {}
+
+ourIcon = L.Icon.extend(options:
+  # shadowUrl: 'leaf-shadow.png'
+  iconSize: [64, 64 ]
+  shadowSize: [0, 0 ]
+  iconAnchor: [32, 64 ]
+  shadowAnchor: [0, 0 ]
+  popupAnchor: [-3, -76 ])
+
+# var greenIcon = new LeafIcon({iconUrl: 'leaf-green.png'}),
+    # redIcon = new LeafIcon({iconUrl: 'leaf-red.png'}),
+    # orangeIcon = new LeafIcon({iconUrl: 'leaf-orange.png'});
 
 addMarker = (achievement) ->
   lat = achievement.achievement_lat
@@ -7,8 +20,15 @@ addMarker = (achievement) ->
   idx = "i#{lat}|#{lon}"
   if markers.hasOwnProperty idx
     return
+  console.log achievement
+  icon_url = achievement.achievement_image
+  if icons.hasOwnProperty icon_url
+    icon = icons[icon_url]
+  else
+    icon = new ourIcon({iconUrl: icon_url})
+    icons[icon_url] = icon
   markers[idx] = true
-  L.marker(latLng).addTo(map)
+  L.marker(latLng, {icon: icon}).addTo(map)
 
 setAllMarker = () ->
   bounds = map.getBounds()
