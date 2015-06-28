@@ -119,6 +119,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_ACHIEVEMENT_IMAGE = ''
 
 try:
-    from settings_production import *
+    from .settings_production import *
 except:
     print("could not import production settings")
