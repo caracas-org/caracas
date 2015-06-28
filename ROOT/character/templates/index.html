@@ -5,6 +5,10 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 {% endblock %}
 
+{% block bodyel %}
+class="fill"
+{% endblock %}
+
 {% block body %}
     <div class="container-fluid">
       <div id="header-row" class="row">
@@ -26,11 +30,11 @@
         <span id="search-box"> <input type="text" placeholder="Search"><button class="btn btn-default glyphicon glyphicon-search" type="button"></button> </span>
       </div>
       <div id="avatar">
-          <a onclick="javascript:$('#avatar').animate({'height': '450px'}, 100);" href="#">Show character</a>
-
 
           <div id="charsheet">
-              <div id="username">{{ character.username }}</div>
+              <div id="username">{{ character.user.username }}</div>
+              <div id="userimage"><img src="{{ character.image.url }}"></div>
+              <a onclick="javascript:$('#avatar').animate({'height': '450px'}, 100);" href="#">&#x25BC;</a>
           </div>
           
           <div class="buttons">
@@ -43,9 +47,11 @@
       </div>
       <div id="dumping-ground"></div>
       <div class="row">
-        <div id="map"></div>
       </div>
     </div>
+    <div id="map"></div>
+
+
 {% endblock %}
 
 {% block after_body %}
