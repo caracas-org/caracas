@@ -11,9 +11,20 @@
         <span class="title">Caracas</span>
         <span><a id="logout" href=""> Logout </a></span>
         <span id="settings"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </span>
-        <span id="search-box"> Suche </span>
+<!--           <span id="search-box" class="input-group">
+             <input type="text" class="form-control" placeholder="Search for...">
+             <span class="input-group-btn">
+                <button class="btn btn-default glyphicon glyphicon-search" type="button">
+                </button>
+             </span>
+          </span>
+-->
+        <span id="search-box"> <input type="text" placeholder="Search"><button class="btn btn-default glyphicon glyphicon-search" type="button"></button> </span>
       </div>
-      <div id="avatar"></div>
+      <div id="avatar">
+        <a onclick="javascript:window.loadCharacterBar('{% url 'character:overview' %}')" href="javascript:void(0);">Character Loading</a>
+      </div>
+      <div id="dumping-ground"></div>
       <div class="row">
         <div id="map"></div>
       </div>
@@ -24,17 +35,9 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
   <script type="text/javascript">
-    // var layer = new L.StamenTileLayer("watercolor");
-    // // //stamen-tiles-{s}.a.ssl.fastly.net/
-    // map = new L.Map("map", {
-    //   center: new L.LatLng({{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}),
-    //   // center: new L.LatLng(51.2457, 6.7681),
-    //   zoom: 15
-    // });
-    // map.addLayer(layer);
-
     var map = L.map('map').setView([{{ latitude | default:"51.2457"}}, {{ longitude | default:"6.7681"}}], 15);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    // L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    L.tileLayer('//stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
         maxZoom: 18
     }).addTo(map);
   </script>

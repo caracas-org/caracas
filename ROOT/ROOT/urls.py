@@ -20,12 +20,15 @@ from character import urls as characters_urls
 from achievements import urls as achievement_urls
 from game import urls as game_urls
 
+import achievements.views
 import character.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', character.views.index),
-    # url(r'^c/', include(characters_urls)),
+    url(r'^c/', include(characters_urls, namespace="character")),
     url(r'^a/', include(achievement_urls)),
     # url(r'^g/', include(game_urls)),
+    url(r'^embed/', achievements.views.embed),
 ]
+
