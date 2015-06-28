@@ -198,7 +198,7 @@ def listAll(request):
         total_unlocked = AchievementUnlocked.objects.filter(achievement=a).count()
         item = {
             'image_url': a.icon.url,
-            'achievement_decription': a.description,
+            'achievement_description': a.description,
             'achievement_name': a.name,
             'achievement_unlocked_total': total_unlocked,
             'user_total': no_users,
