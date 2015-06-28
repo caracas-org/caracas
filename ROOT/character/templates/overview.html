@@ -1,20 +1,17 @@
-<div id="dumping-ground">
-    <ul class="nav nav-tabs" id="myTab">
-        
-        <li><a onclick="$(this).tab('show');" href="#visited">visited</a></li>
-        <li><a onclick="$(this).tab('show');" href="#achievements">Achievements</a></li>
-    </ul>
-     
-    <div class="tab-content">
-        <div class="tab-pane" id="visited">
-            Home
-        </div>
-        <div class="tab-pane" id="achievements">
-            Settings
-        </div>
+<ul class="nav nav-tabs" id="myTab">
+    <li><a onclick="$(this).tab('show');" href="#visited">visited</a></li>
+    <li><a onclick="$(this).tab('show');" href="#achievements">Achievements</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane" id="visited">
+        Home
     </div>
-     
-    <script>
-        $('#myTab a:last').tab('show');
-    </script>
+    <div class="tab-pane" id="achievements">
+        {{ achievement_tab|safe }}
+    </div>
 </div>
+
+<script>
+    $('#myTab a:last').tab('show');
+</script>

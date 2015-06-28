@@ -3,7 +3,7 @@
 
   window.loadCharacterBar = function(url) {
     return $.get(url, function(data) {
-      return $('#dumping-ground').replaceWith(data);
+      return $('#dumping-ground').html(data).animate({'width': '400px'});
     });
   };
 

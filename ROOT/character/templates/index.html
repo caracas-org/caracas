@@ -26,7 +26,15 @@
         <span id="search-box"> <input type="text" placeholder="Search"><button class="btn btn-default glyphicon glyphicon-search" type="button"></button> </span>
       </div>
       <div id="avatar">
-        <a onclick="javascript:window.loadCharacterBar('{% url 'character:overview' %}')" href="javascript:void(0);">Character Loading</a>
+          <a onclick="javascript:$('#avatar').animate({'height': '450px'}, 100);" href="#">Show character</a>
+
+          <div class="buttons">
+              <button class="btn" onclick="javascript:window.loadCharacterBar('{% url 'character:overview' %}')">Achievements</button>
+              <button class="btn">Places</button>
+              <button class="btn">Quests</button>
+              <button class="btn">Knowledge</button>
+          </div>
+
       </div>
       <div id="dumping-ground"></div>
       <div class="row">
