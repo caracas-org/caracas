@@ -2,7 +2,7 @@
 <div class="achievement_item">
 
   <figure>
-    <img class="{% if a.is_unlocked %} unlocked {% endif %}" src="{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
+    <img class="{% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA }}{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
     <figcaption>
       {{ a.achievement_name }}
     </figcaption>

@@ -87,3 +87,6 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+def places(request):
+    return render(request, "places.html")
