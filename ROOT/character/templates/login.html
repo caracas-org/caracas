@@ -5,43 +5,30 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 {% endblock %}
 
-{% block body %}
-    <div class="container-fluid">
-      <div id="header-row" class="row">
-        <span class="title">Caracas</span>
-        {% if user.is_authenticated %}
-          <span><a id="logout" href="/admin/logout"> Logout </a></span>
-        {% else %}
-          <!-- <a href="login">Log in</a> -->
-        {% endif %}
-<!--           <span id="search-box" class="input-group">
-             <input type="text" class="form-control" placeholder="Search for...">
-             <span class="input-group-btn">
-                <button class="btn btn-default glyphicon glyphicon-search" type="button">
-                </button>
-             </span>
-          </span>
--->
-        <span id="search-box"> <input type="text" placeholder="Search"><button class="btn btn-default glyphicon glyphicon-search" type="button"></button> </span>
-      </div>
-      <div id="login">
-        {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
+{% block bodyel %}
+class="fill"
+{% endblock %}
 
-        <form method="post" action="">
+{% block body %}
+<div class="title">Caracas</div>
+<div id="login-container"></div>
+<div id="login">
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
 
         <input type="submit" value="login" />
         <input type="hidden" name="next" value="{{ next }}" />
         <p>{{ message }}</p>
-        </form>      
-      </div>
-      <div class="row">
-        <div id="map"></div>
-      </div>
-    </div>
+    </form>
+</div>
+<div id="map" style="height: 100%;"></div>
+    <style>.leaflet-control-container { display: none; }</style>
+
 {% endblock %}
 
 {% block after_body %}

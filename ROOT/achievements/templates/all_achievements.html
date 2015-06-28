@@ -4,19 +4,25 @@
     {% for a in achievements %}
     <div class="achievement_item">
 
-      <figure>
+    <figure>
+    {% if a.image_url %}
         <img class="{% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA_ROOT }}/{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
+    {% endif %}
         <figcaption>
           {{ a.achievement_name }}
         </figcaption>
       </figure>
 
-      <div class="achievement_description">{{ a.achievement_description }}</div>
-      <div class="achievement_overall_progress" hidden>{{ a.achievement_unlocked_total }} / {{ a.users_total }} / </div>
 
-      <div class="achievement_unlocked_date">{{ a.unlock_date }}</div>
+      <div class="achievement_description">{{ a.achievement_description }}</div>
+      <div class="achievement_overall_progress">{{ a.achievement_unlocked_total }} / {{ a.users_total }} </div>
+
+    {% if a.unlock_date %}
+      <div class="achievement_unlocked_date">unlocked at {{ a.unlock_date }}</div>
+    {% endif %}
       <div class="achievement_unlocked" hidden>Is unlocked / Is not unlocked</div>
     </div>
+        <hr>
     {% endfor %}
   </div>
   <div id="achievement_list_footer"></div>

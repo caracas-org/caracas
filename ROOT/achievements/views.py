@@ -197,7 +197,7 @@ def listAll(request):
     for a in Achievement.objects.all():
         total_unlocked = AchievementUnlocked.objects.filter(achievement=a).count()
         item = {
-            'image_url': a.icon.url,
+            'image_url': a.icon.url if a.icon else '',
             'achievement_description': a.description,
             'achievement_name': a.name,
             'achievement_unlocked_total': total_unlocked,
@@ -210,8 +210,10 @@ def listAll(request):
                 item['unlock_date'] = au.unlocked
         achievements.append(item)
 
+    print(User.objects.all().count())
     context = RequestContext(request, {
-        'achievements': achievements
+        'achievements': achievements,
+        'users_total': User.objects.all().count(),
     })
     return HttpResponse(template.render(context))
 

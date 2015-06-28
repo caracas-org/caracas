@@ -15,7 +15,9 @@ def index(request):
     if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse("character:login"))
 
-    return render(request, "index.html")
+    return render(request, "index.html", {
+        'character': Character.objects.get(user=request.user)
+    })
 
 def overview(request):
 
@@ -42,14 +44,15 @@ def overview(request):
     for a in Achievement.objects.all():
         total_unlocked = AchievementUnlocked.objects.filter(achievement=a).count()
         item = {
-            'image_url': a.icon.url,
+            'image_url': a.icon.url if a.icon else '',
             'achievement_description': a.description,
             'achievement_name': a.name,
             'achievement_unlocked_total': total_unlocked,
-            'user_total': no_users,
+            'users_total': no_users,
         }
-        au = AchievementUnlocked.objects.get(achievement=a, character__user=request.user)
+        au = AchievementUnlocked.objects.filter(achievement=a, character__user=request.user)
         if au:
+            au = au[0]
             if au.unlocked is not None:
                 item['is_unlocked'] = True
                 item['unlock_date'] = au.unlocked

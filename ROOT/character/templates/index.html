@@ -28,6 +28,11 @@
       <div id="avatar">
           <a onclick="javascript:$('#avatar').animate({'height': '450px'}, 100);" href="#">Show character</a>
 
+
+          <div id="charsheet">
+              <div id="username">{{ character.username }}</div>
+          </div>
+          
           <div class="buttons">
               <button class="btn" onclick="javascript:window.loadCharacterBar('{% url 'character:overview' %}')">Achievements</button>
               <button class="btn">Places</button>
