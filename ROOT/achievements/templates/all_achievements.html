@@ -6,7 +6,7 @@
 
     <figure>
     {% if a.image_url %}
-        <img class="{% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA_ROOT }}/{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
+        <img class="ach_image {% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA_ROOT }}/{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
     {% endif %}
         <figcaption>
           {{ a.achievement_name }}
