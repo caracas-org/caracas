@@ -180,15 +180,8 @@ class GetAchievements(APIView):
         return Response({'achievements': res})
 
 def embed(request):
-    html = '''<h2>Insert into header</h2>
-    <span>
-        &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"&gt;&lt;/script&gt; <br />
-        &lt;script src="http://caracas.rocks/static/embed/caracas_api.js"&gt;&lt;/script&gt;
-    </span>
-    <h2>Insert where ever the achievement is triggered:</h2>
-    <span>
-        &lt;script&gt;$.achievement_unlocked(&lt;ACHIEVEMENT_ID&gt;, &lt;USER_ID&gt;, 'auth_token');&lt;/script&gt;
-    <span>
+    return render(request, 'api/embed.html')
+    html = '''
     '''
     return HttpResponse(html)
 
