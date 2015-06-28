@@ -1,0 +1,23 @@
+<div id="achievement_list_container">
+  <div id="achievement_list_header"><h2>Achievements</h2><div id="achievement_list_compare"><input type="checkbox"> </div></div>
+  <div id="achievement_list_body">
+    {% for a in achievements %}
+    <div class="achievement_item">
+
+      <figure>
+        <img class="{% if a.is_unlocked %} unlocked {% endif %}" src="{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
+        <figcaption>
+          {{ a.achievement_name }}
+        </figcaption>
+      </figure>
+
+      <div class="achievement_description">{{ a.achievement_description }}</div>
+      <div class="achievement_overall_progress" hidden>{{ a.achievement_unlocked_total }} / {{ a.users_total }} / </div>
+
+      <div class="achievement_unlocked_date">{{ a.unlock_date }}</div>
+      <div class="achievement_unlocked" hidden>Is unlocked / Is not unlocked</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div id="achievement_list_footer"></div>
+</div>

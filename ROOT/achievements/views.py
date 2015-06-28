@@ -3,6 +3,7 @@ from .models import Achievement, APIUser, AchievementUnlocked
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.shortcuts import render
+from django.template import RequestContext, loader
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.response import Response
@@ -185,3 +186,33 @@ def embed(request):
     <span>
     '''
     return HttpResponse(html)
+
+def listAll(request):
+    """
+    Retrieve all achievements available and return as rendered HTML
+
+
+    """
+    template = loader.get_template("all_achievements.html")
+    achievements = list()
+    no_users = Character.objects.all().count()
+    for a in Achievement.objects.all():
+        total_unlocked = AchievementUnlocked.objects.filter(achievement=a).count()
+        item = {
+            'image_url': a.icon.url,
+            'achievement_decription': a.description,
+            'achievement_name': a.name,
+            'achievement_unlocked_total': total_unlocked,
+            'user_total': no_users,
+        }
+        au = AchievementUnlocked.objects.get(achievement=a, character__user=request.user)
+        if au:
+            if au.unlocked is not None:
+                item['is_unlocked'] = True
+                item['unlock_date'] = au.unlocked
+        achievements.append(item)
+
+    context = RequestContext(request, {
+        'achievements': achievements
+    })
+    return HttpResponse(template.render(context))
