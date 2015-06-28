@@ -119,6 +119,11 @@ class UnlockProgress(APIView):
                         response['fulfilled'] = True
                         achievement_unlocked.fulfilled = True
                         response['xp_gained'] = achievement.XP_gained
+                        c = Character.objects.get(user=serializer.validated_data['user_id'])
+                        c.XP += achievement.XP_gained
+                        level_requirement = sum(range(c.level))*500
+                        c.level = c.XP // level_requirement
+                        c.save()
                     achievement_unlocked.save()
             return Response(response)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
