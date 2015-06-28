@@ -6,7 +6,7 @@
 
     <figure>
     {% if a.image_url %}
-        <img class="ach_image {% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA_ROOT }}/{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
+        <img class="ach_image {% if a.is_unlocked %} unlocked {% endif %}" src="{{ MEDIA }}{{ a.image_url }}" alt="{{ a.achievement_description }}"/>
     {% endif %}
         <figcaption>
           {{ a.achievement_name }}
@@ -15,7 +15,7 @@
 
 
       <div class="achievement_description">{{ a.achievement_description }}</div>
-      <div class="achievement_overall_progress">{{ a.achievement_unlocked_total }} / {{ a.users_total }} </div>
+      <div class="achievement_overall_progress">{{ a.achievement_unlocked_total }} / {{ a.users_total }}00 </div>
 
     {% if a.unlock_date %}
       <div class="achievement_unlocked_date">unlocked at {{ a.unlock_date }}</div>
