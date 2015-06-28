@@ -2,6 +2,7 @@
 // needs jquery
 
 var CARACAS_BASE_URL = 'http://caracas.rocks/';
+var show_popup;
 
 (function() {
 
@@ -113,5 +114,6 @@ var CARACAS_BASE_URL = 'http://caracas.rocks/';
 
     $.achievement_unlocked = achievement_unlocked;
 
+    show_popup = _show_popup;
 
 }());
