@@ -1,10 +1,59 @@
+{% load staticfiles %}
 <ul class="nav nav-tabs" id="myTab">
-    <li><a onclick="$(this).tab('show');" href="#unlocked">Visited</a></li>
-    <li><a onclick="$(this).tab('show');" href="#achievements">Planned</a></li>
+    <li><a onclick="$(this).tab('show');" href="#visited">Visited</a></li>
+    <li><a onclick="$(this).tab('show');" href="#planned">Planned</a></li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane" id="visited">
+    <div class="tab-pane" id="visited" style="overflow:hidden">
+        <div class="achievement_item">
+
+        <figure style="display:inline-block;">
+            <img class="unlocked" src="{% static "empty.png" %}" alt="Paris"/>
+            <figcaption>
+              Paris
+            </figcaption>
+          </figure>
+          <div class="achievement_unlocked_date">unlocked at September 12th 1979</div>
+        </div>
+        <hr>
+        <div class="achievement_item">
+
+        <figure>
+            <img class="unlocked" src="{% static "empty.png" %}" alt="Mount Everest"/>
+            <figcaption>
+              Mount Everest
+            </figcaption>
+          </figure>
+          <div class="achievement_unlocked_date">unlocked at June 26th 2016</div>
+        </div>
+        <hr>
+
+        <div class="achievement_item">
+
+        <figure>
+            <img class="unlocked" src="{% static "empty.png" %}" alt="Greenland"/>
+            <figcaption>
+              Greenland
+            </figcaption>
+          </figure>
+          <div class="achievement_unlocked_date">unlocked at January 1st 1970</div>
+        </div>
+        <hr>
+
+        <div class="achievement_item">
+
+        <figure>
+            <img class="unlocked" src="{% static "empty.png" %}" alt="Gelsenkirchen"/>
+            <figcaption>
+              Gelsenkirchen
+            </figcaption>
+          </figure>
+          <div class="achievement_unlocked_date">unlocked at February 14th 2012</div>
+        </div>
+        <hr>
+
+
 
     </div>
     <div class="tab-pane" id="planned">
